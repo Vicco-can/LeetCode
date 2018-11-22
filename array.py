@@ -242,9 +242,9 @@ class Solution3:
 
 
 
-if __name__ == "__main__":
-    s = Solution3()
-    print(s.removeElement2([0,1,2,2,3,0,4,2], 2))
+# if __name__ == "__main__":
+#     s = Solution3()
+#     print(s.removeElement2([0,1,2,2,3,0,4,2], 2))
 
 '''
 35、搜索插入位置
@@ -314,16 +314,70 @@ class Solution4:
                 return mid
 
 
-if __name__ == "__main__":
-    s = Solution4()
-    print(s.searchInsert1([1,3,5,6], 2))
+# if __name__ == "__main__":
+#     s = Solution4()
+#     print(s.searchInsert1([1,3,5,6], 2))
 '''
-53
-'''
+53、最大子序和
+给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+示例:
+
+输入: [-2,1,-3,4,-1,2,1,-5,4],
+输出: 6
+解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+进阶:
+
+如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
 
 '''
-66
+
+
+class Solution5:
+    def maxSubArray(self, nums):
+        """
+        从前往后遍历，当和为负数则停止，用一个变量记录之前最大的和记录，每次新的和与其比较，为其重新赋值
+        :type nums: List[int]
+        :rtype: int
+        """
+        premax = nums[0]
+        sum = 0
+        for item in nums:
+            if sum >= 0:
+                sum += item
+            else:
+                sum = item
+            premax = max(sum, premax)
+        return premax
+
+
+# if __name__ == "__main__":
+#     s = Solution5()
+#     print(s.maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
+
+
 '''
+66、加一
+给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+
+最高位数字存放在数组的首位， 数组中每个元素只存储一个数字。
+
+你可以假设除了整数 0 之外，这个整数不会以零开头。
+
+示例 1:
+
+输入: [1,2,3]
+输出: [1,2,4]
+解释: 输入数组表示数字 123。
+'''
+
+
+class Solution6:
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+
 
 '''88'''
 
