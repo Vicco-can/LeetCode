@@ -519,15 +519,137 @@ class Solution8:
         return res
 
 
+# if __name__ == "__main__":
+#     s = Solution8()
+#     print(s.generate(5))
+
+'''119、杨辉三角 II
+给定一个非负索引 k，其中 k ≤ 33，返回杨辉三角的第 k 行。
+在杨辉三角中，每个数是它左上方和右上方的数的和。
+
+示例:
+
+输入: 3
+输出: [1,3,3,1]
+
+进阶：
+
+你可以优化你的算法到 O(k) 空间复杂度吗？
+'''
+
+
+class Solution9:
+    def getRow(self, rowIndex):
+        """思路：1、用生成杨辉三角的方法直接返回某一行，但是空间复杂度高，2、递归方法，用时间复杂度换空间复杂度
+        :type rowIndex: int
+        :rtype: List[int]
+        """
+        if rowIndex < 0:
+            return []
+        if rowIndex == 0:
+            return [1]
+        elif rowIndex == 1:
+            return [1, 1]
+        else:
+            pre_Line = self.getRow(rowIndex-1)
+            i = 0
+            res = []
+            res.append(1)
+            for i in range(1, rowIndex):
+                res.append(pre_Line[i-1]+pre_Line[i])
+            res.append(1)
+
+            return res
+
+
+# if __name__ == "__main__":
+#     s = Solution9()
+#     print(s.getRow(2))
+
+
+'''121、买卖股票的最佳时机
+给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+
+如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。
+
+注意你不能在买入股票前卖出股票。
+
+示例 1:
+
+输入: [7,1,5,3,6,4]
+输出: 5
+解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+
+'''
+
+
+class Solution10:
+    def maxProfit(self, prices):
+        """思路：从前往后遍历，寻找两元素间最大差值，且有方向之分,该方法可求出解，但是时间复杂度较高
+        :type prices: List[int]
+        :rtype: int
+        """
+        i = 0
+        j = 0
+        max_diff = 0
+        for i in range(len(prices)-1):
+            for j in range(i+1, len(prices)):
+                diff = prices[j] - prices[i]
+                max_diff = max(max_diff, diff)
+
+        return max_diff
+
+    def maxProfit2(self, prices):
+        """思路：从前往后遍历，或者从后往前遍历，两个值分别用于记录差值最大值和当前最小元素值
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices)==0:
+            return 0
+        max_diff = 0
+        min_item = prices[0]
+        for i in range(len(prices)):
+            min_item = min(min_item, prices[i])
+            max_diff = max(max_diff, prices[i] - min_item)
+
+        return max_diff
+
+
+# if __name__ == "__main__":
+#     s = Solution10()
+#     print(s.maxProfit2([7,1,5,3,6,4]))
+'''122、买卖股票的最佳时机 II
+给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+
+设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。
+
+注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+
+示例 1:
+
+输入: [7,1,5,3,6,4]
+输出: 7
+解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
+     随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。
+'''
+
+
+class Solution11:
+    def maxProfit(self, prices):
+        """思路，动态规划，递归，最大的收益等于最后一段的大的收益加上之前最大的收益？？
+        :type prices: List[int]
+        :rtype: int
+        """
+        max_p = 0
+        for i in range(len(prices)-1):
+            for j in range(1, len(prices)):
+                max_p = max(prices[j] - prices[i]+Solution10.maxProfit2(self, prices[(j+1):]), max_p)
+        return max_p
+
 if __name__ == "__main__":
-    s = Solution8()
-    print(s.generate(5))
-
-'''119'''
-
-'''121'''
-
-'''122'''
+    s = Solution11()
+    print(s.maxProfit([1,2,3,4,5]))
 
 '''167'''
 
