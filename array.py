@@ -638,18 +638,34 @@ class Solution10:
 class Solution11:
     def maxProfit(self, prices):
         """思路，动态规划，递归，最大的收益等于最后一段的大的收益加上之前最大的收益？？
+        该方法可以解决，但是涉及到递归，用时较多
         :type prices: List[int]
         :rtype: int
         """
         max_p = 0
         for i in range(len(prices)-1):
-            for j in range(1, len(prices)):
+            for j in range(i+1, len(prices)):
                 max_p = max(prices[j] - prices[i]+Solution10.maxProfit2(self, prices[(j+1):]), max_p)
         return max_p
 
+    def maxProfit2(self, prices):
+        """官网题解给出三种方法，第一种暴力法，用到递归，和上面自己的思路类似，
+        第二种峰谷法，找到峰和谷，计算出最大差值相加
+        第三种一遍遍历，将增加的值相加
+        :type prices: List[int]
+        :rtype: int
+        """
+        sum_p = 0
+        for i in range(len(prices)-1):
+            diff = prices[i+1] - prices[i]
+            if diff > 0:
+                sum_p += diff
+        return sum_p
+
+
 if __name__ == "__main__":
     s = Solution11()
-    print(s.maxProfit([1,2,3,4,5]))
+    print(s.maxProfit2([1,2,3,4,5]))
 
 '''167'''
 
